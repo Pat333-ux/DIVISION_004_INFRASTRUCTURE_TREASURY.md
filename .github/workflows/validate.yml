@@ -1,0 +1,55 @@
+YAML
+name: Division 004 Infrastructure Validation Pipeline
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.10'
+
+    - name: Install Dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install jsonschema pytest
+
+    - name: Run Infrastructure Integrity Check
+      run: python3 scripts/verify_infrastructure.py
+
+    - name: Run Pytest Suite
+      run: pytest tests/
+File Name: setup.sh
+Bash
+#!/usr/bin/env bash
+# ==============================================================================
+# BEAST System 3.0 — Division 004: Infrastructure & Treasury Bootstrap Script
+# Automatically initializes directory structures and placeholder touch points.
+# ==============================================================================
+
+set -e
+
+echo "[*] Initializing BEAST System 3.0 - Division 004 Repository Layout..."
+
+# Create directory hierarchy
+mkdir -p docs
+mkdir -p schemas
+mkdir -p scripts
+mkdir -p workflows
+mkdir -p tests
+mkdir -p .github/workflows
+
+echo "[+] Directory structure created successfully."
+echo "[*] Ready to populate files. Ensure markdown, JSON, and python scripts are written to their respective paths."
+echo "=== Division 004 Setup Complete ==="
